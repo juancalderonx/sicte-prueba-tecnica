@@ -2,127 +2,112 @@
 
 <html>
 
-	<head>
-		<meta charset="UTF-8" />
-		<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet" type="text/css" />
-		<link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.0-beta.0/dist/quasar.min.css" rel="stylesheet" type="text/css" />
-		<link href="styles.css" rel="stylesheet" type="text/css" />
-	</head>
+<head>
+	<meta charset="UTF-8" />
+	<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/quasar@^1.0.0-beta.0/dist/quasar.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
 
-	<body>
+<body>
 
-		<div id="app" class="q-pa-sm">
+	<div id="app" class="q-pa-sm">
 
-			<!-- Page layout -->
+		<!-- Page layout -->
 
-			<q-layout>
+		<q-layout>
 
-				<q-header>
-					<q-toolbar>
-					  <q-toolbar-title>Gestión del personal</q-toolbar-title>
-					  <q-space></q-space>
-					  <q-btn icon="add" round @click="openCreateDialog"></q-btn>
-					</q-toolbar>
-				</q-header>
+			<q-header>
+				<q-toolbar>
+					<q-btn icon="supervisor_account" flat></q-btn>
+					<q-toolbar-title>Gestión de personal</q-toolbar-title>
+					<q-space></q-space>
+					<q-btn icon="add" round class="my-custom-color" @click="openCreateDialog"></q-btn>
+				</q-toolbar>
+			</q-header>
 
-				<q-page-container>
+			<q-page-container>
 
-					<q-page>
+				<q-page>
 
-						<!-- Listing -->
+					<!-- Listing -->
 
-						<q-table
-							row-key="id"
-							:data="data"
-							:columns="fields"
-							>
+					<q-table row-key="id" :data="data" :columns="fields">
 
-							<template v-slot:body="props">
-								<q-tr :props="props" @mouseenter.native="props.row.hover=true" @mouseleave.native="props.row.hover=false">
-									<q-td :key="field.name" v-for="field in fields" :props="props">
-										{{ props.row[field.name] }}
-									</q-td>
-									<q-td key="action">
-										<q-btn flat round color="primary" @click="edit(props.row)" icon="edit"></q-btn>
-									</q-td>
-								</q-tr>
-							</template>
-						</q-table>
+						<template v-slot:body="props">
+							<q-tr :props="props" @mouseenter.native="props.row.hover=true"
+								@mouseleave.native="props.row.hover=false">
+								<q-td :key="field.name" v-for="field in fields" :props="props">
+									{{ props.row[field.name] }}
+								</q-td>
+								<q-td key="action">
+									<q-btn flat round color="primary" @click="edit(props.row)" icon="edit"></q-btn>
+								</q-td>
+							</q-tr>
+						</template>
+					</q-table>
 
-						<!-- End Listing -->
+					<!-- End Listing -->
 
-					</q-page>
+				</q-page>
 
-				</q-page-container>
+			</q-page-container>
 
-			</q-layout>
+		</q-layout>
 
-			<q-dialog v-model="form_create">
-				<q-card>
-				  <q-card-section>
+		<!-- Add dialog -->
+
+		<q-dialog v-model="form_create">
+			<q-card class="msb-card-dialog">
+				<q-card-section>
 					<div class="text-h6">Create</div>
-				  </q-card-section>
-				  <q-card-section>
-					<q-input
-					  v-for="field in fields"
-					  :key="field.id"
-					  v-model="input[field.name]"
-					  :id="'field-' + field.name"
-					  :label="field.label"
-					  :type="field.type"
-					  :autogrow="field.multiline"
-					  :class="field.required"
-					  stack-label
-					/>
-				  </q-card-section>
-				  <q-card-section align="right">
+				</q-card-section>
+				<q-card-section>
+					<q-input v-for="field in fields" :key="field.id" v-model="input[field.name]"
+						:id="'field-' + field.name" :label="field.label" :type="field.type" :autogrow="field.multiline"
+						:class="field.required" stack-label />
+				</q-card-section>
+				<q-card-section align="right">
 					<q-btn color="primary" v-close-popup>Cancel</q-btn>
 					<q-btn color="primary" @click="commit(input)">OK</q-btn>
-				  </q-card-section>
-				</q-card>
-			  </q-dialog>
+				</q-card-section>
+			</q-card>
+		</q-dialog>
 
-			<!-- Edit dialog -->
+		<!-- Edit dialog -->
 
-			<q-dialog v-model="form_edit">
-				
-				<q-card class="msb-card-dialog">
+		<q-dialog v-model="form_edit">
 
-					<q-card-section>
-						<div class="text-h6">Edit</div>
-					</q-card-section>
+			<q-card class="msb-card-dialog">
 
-					<q-card-section>
-						<q-input
-							v-for="field in fields"
-							:key="field.id"
-							v-model="input[field.name]"
-							:id="'field-' + field.name"
-							:label="field.label"
-							:type="field.type"
-							:autogrow="field.multiline"
-							:class="field.required"
-							stack-label
-						/></q-input>
-					</q-card-section>
+				<q-card-section>
+					<div class="text-h6">Edit</div>
+				</q-card-section>
 
-					<q-card-section align="right">
-						<q-btn color="primary" v-close-popup>Cancel</q-btn>
-						<q-btn color="primary" v-close-popup @click="commit(input)">OK</q-btn>
-					</q-card-section>
+				<q-card-section>
+					<q-input v-for="field in fields" :key="field.id" v-model="input[field.name]"
+						:id="'field-' + field.name" :label="field.label" :type="field.type" :autogrow="field.multiline"
+						:class="field.required" stack-label /></q-input>
+				</q-card-section>
 
-				</q-card>
+				<q-card-section align="right">
+					<q-btn color="primary" v-close-popup>Cancel</q-btn>
+					<q-btn color="primary" v-close-popup @click="commit(input)">OK</q-btn>
+				</q-card-section>
 
-			</q-dialog>
+			</q-card>
 
-		</div>
+		</q-dialog>
 
-		<!-- Scripts -->
+	</div>
 
-		<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0-beta.0/dist/quasar.umd.min.js"></script>
-		<script src="index.js"></script>
+	<!-- Scripts -->
 
-	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0-beta.0/dist/quasar.umd.min.js"></script>
+	<script src="index.js"></script>
+
+</body>
 
 </html>

@@ -2,3 +2,11 @@
 	max-width: 800px;
 	width: 80%;
 }
+
+.my-custom-color {
+	background-color: white;
+}
+
+.my-custom-color .q-btn__wrapper {
+	color: #1976d2;
+}
