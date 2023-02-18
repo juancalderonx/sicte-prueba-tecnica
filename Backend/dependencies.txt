@@ -3,3 +3,4 @@ yarn add @nestjs/typeorm typeorm pg
 yarn add @nestjs/mapped-types
 yarn add class-validator
 yarn add class-transformer
+yarn add @nestjs/platform-express cors

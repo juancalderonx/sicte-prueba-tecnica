@@ -1,7 +1,7 @@
 import {
-  IsDecimal,
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsPositive,
   IsString,
   MaxLength,
@@ -34,7 +34,7 @@ export class CreateEmployeeDto {
   readonly role: string;
 
   @IsPositive()
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   readonly salary: number;
 
