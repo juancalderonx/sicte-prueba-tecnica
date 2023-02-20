@@ -64,9 +64,9 @@
 					<div class="text-h6">Create</div>
 				</q-card-section>
 				<q-card-section>
-					<q-input v-for="field in fields" :key="field.id" v-model="input[field.name]"
-						:id="'field-' + field.name" :label="field.label" :type="field.type" :autogrow="field.multiline"
-						:class="field.required" stack-label />
+					<q-input v-for="field in fields" :key="field.id" v-if="field.name !== 'id'"
+						v-model="input[field.name]" :id="'field-' + field.name" :label="field.label" :type="field.type"
+						:autogrow="field.multiline" :class="field.required" stack-label />
 				</q-card-section>
 				<q-card-section align="right">
 					<q-btn color="primary" v-close-popup>Cancel</q-btn>
@@ -106,7 +106,7 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/quasar@^1.0.0-beta.0/dist/quasar.umd.min.js"></script>
-	<script src="index.js"></script>
+	<script type="module" src="index.js"></script>
 
 </body>
 

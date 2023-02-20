@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,12 +12,16 @@ import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeesService {
+  private readonly logger = new Logger('EmployeesService');
+
   constructor(
     @InjectRepository(Employee)
     private readonly employeeRepository: Repository<Employee>,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
+    this.logger.log('Estamos en el Servicio Create.');
+
     const { personalEmail, corporativeEmail, dni, ...employeeDetails } =
       createEmployeeDto;
 

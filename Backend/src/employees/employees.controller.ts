@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Logger,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -14,10 +15,13 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Controller('employees')
 export class EmployeesController {
+  private readonly logger = new Logger('EmployeesController');
+
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
+    this.logger.log('Estamos en el Controlador Create.');
     return this.employeesService.create(createEmployeeDto);
   }
 
